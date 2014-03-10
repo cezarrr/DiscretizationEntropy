@@ -33,7 +33,7 @@ def countProbabilities(listOfDicts):
     return  probDicts
 
 if __name__ == "__main__":
-    file = "C:\Users\CJank\Desktop\\tmp\\testowyRSES.tab"
+    file = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
     loadedData = Loader.loadExtensionSensitive(file)
     dicks=countOccurency(loadedData)
     pDics = countProbabilities(dicks)
