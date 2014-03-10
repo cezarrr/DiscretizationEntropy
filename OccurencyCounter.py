@@ -45,14 +45,28 @@ def countEntropyOfDicts(probabilityDicts):
 
 def sumEntropyInSingleDict(inputEntropyDict):
     sumEntropy = (sum (inputEntropyDict.itervalues())) *(-1)
-    return  sumEntropy
+    meanEntropy = sumEntropy/len(inputEntropyDict)
+    return  (sumEntropy,meanEntropy)
 
 def countEntropyInData(entropyDict):
     sumEntropy=0.0
     for att in entropyDict:
-        sumEntropy+=sumEntropyInSingleDict(entropyDict[att])
+        s,m=sumEntropyInSingleDict(entropyDict[att])
+        sumEntropy+=s
     meanEntropy=sumEntropy/len(entropyDict)
     return (sumEntropy,meanEntropy)
+
+def loadAndCount(pathToFile):
+    loadedData = Loader.loadExtensionSensitive(pathToFile)
+    rows = len(loadedData)
+    cols = len(loadedData[0])
+    fields = rows*cols
+    dicts=countOccurency(loadedData)
+    pDicts = countProbabilities(dicts)
+    eDicts = countEntropyOfDicts(pDicts)
+    sumEnt, meanEnt = countEntropyInData(eDicts)
+    metricEnt = sumEnt/(float)(fields)
+    return (sumEnt,meanEnt,metricEnt)
 
 if __name__ == "__main__":
     file = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
