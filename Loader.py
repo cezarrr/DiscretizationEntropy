@@ -118,8 +118,8 @@ def reduceRepetitions(loadedData):
 
         a+=1
 
-    print ("Current len="+(str)(len(currentData)))
-    print ("One-over-reduction ratio="+(str)((float)(len(currentData))/(float)(len(loadedData))))
+    #print ("Current len="+(str)(len(currentData)))
+    #print ("One-over-reduction ratio="+(str)((float)(len(currentData))/(float)(len(loadedData))))
     return currentData
 
 

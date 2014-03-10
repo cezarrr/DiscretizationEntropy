@@ -58,7 +58,7 @@ def countEntropyInData(entropyDict):
 
 def loadAndCount(pathToFile, reduceData=False):
     loadedData = Loader.loadExtensionSensitive(pathToFile)
-    if reduce:
+    if reduceData:
         loadedData = Loader.reduceRepetitions(loadedData)
     rows = len(loadedData)
     cols = len(loadedData[0])
