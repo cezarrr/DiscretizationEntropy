@@ -5,8 +5,6 @@ Loading module
 """
 
 
-import numpy as np
-import pylab as pl
 import csv
 
 def loadData(fileName, csvDelimiter=','):
@@ -50,8 +48,8 @@ def loadDataTab(fileName, csvDelimiter=' '):
                             columnParsed = column
                         if columnParsed!='':
                             rowParsed.append(columnParsed)
-
-                    dataSet.append(rowParsed)
+                    if rowParsed:
+                        dataSet.append(rowParsed)
         finally:
             csvFile.close()
     return dataSet
@@ -76,9 +74,9 @@ def loadDataArff(fileName, csvDelimiter=','):
                             columnParsed = float(column)
                         except:
                             columnParsed = column
-                        if columnParsed:
+                        if columnParsed!='':
                             rowParsed.append(columnParsed)
-                    if rowParsed!='':
+                    if rowParsed:
                         dataSet.append(rowParsed)
         finally:
             csvFile.close()
@@ -95,7 +93,6 @@ def loadExtensionSensitive(fileName):
     return loadedData
 
 if __name__ == "__main__":
-    print(__doc__)
     file = "C:\Users\CJank\Desktop\\tmp\\testowyRSES.tab"
     file2 = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
     X=loadExtensionSensitive(file2)
