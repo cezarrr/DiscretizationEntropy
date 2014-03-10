@@ -56,7 +56,7 @@ def loadDataTab(fileName, csvDelimiter=' '):
             csvFile.close()
     return dataSet
 
-def loadDataArff(fileName, csvDelimiter=' '):
+def loadDataArff(fileName, csvDelimiter=','):
     dataSet = []
     with open(fileName, 'rb') as csvFile:
         try:
@@ -66,9 +66,9 @@ def loadDataArff(fileName, csvDelimiter=' '):
                 if row:
                     rowParsed = []
                     for column in row:
-                        if(startParsing==False and column!='@DATA'):
+                        if(startParsing==False and column.upper()!='@DATA'):
                             break
-                        elif(startParsing==False and column=='@DATA'):
+                        elif(startParsing==False and column.upper()=='@DATA'):
                             startParsing=True
                             break
 
@@ -85,11 +85,18 @@ def loadDataArff(fileName, csvDelimiter=' '):
     return dataSet
 
 def loadExtensionSensitive(fileName):
-    
+    loadedData=[]
+    if (fileName.lower().endswith('.tab')):
+        loadedData=loadDataTab(fileName)
+    elif (fileName.lower().endswith('.arff')):
+        loadedData=loadDataArff(fileName)
+    else:
+        loadedData=loadData(fileName)
+    return loadedData
 
 if __name__ == "__main__":
     print(__doc__)
-    file = "C:\Users\CJank\Desktop\\testowyRSES.tab"
-    X=loadData(file)
-    Y=loadDataTab(file)
-    print Y
+    file = "C:\Users\CJank\Desktop\\tmp\\testowyRSES.tab"
+    file2 = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
+    X=loadExtensionSensitive(file2)
+    print X
