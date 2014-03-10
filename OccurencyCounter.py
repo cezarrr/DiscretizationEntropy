@@ -6,6 +6,7 @@ Counts how many times each value occures
 
 import Loader
 import copy
+import math
 
 def countOccurency(dataTable):
     listOfDicts = dict.fromkeys(xrange(len(dataTable[0])))
@@ -32,10 +33,35 @@ def countProbabilities(listOfDicts):
 
     return  probDicts
 
+def countEntropyOfDicts(probabilityDicts):
+    entropyDicts = copy.deepcopy(probabilityDicts)
+
+    for att in entropyDicts:
+       for eachEntry in entropyDicts[att]:
+            entropyDicts[att][eachEntry] = \
+                (float)(entropyDicts[att][eachEntry]) * math.log((float)(entropyDicts[att][eachEntry]),2)
+
+    return entropyDicts
+
+def sumEntropyInSingleDict(inputEntropyDict):
+    sumEntropy = (sum (inputEntropyDict.itervalues())) *(-1)
+    return  sumEntropy
+
+def countEntropyInData(entropyDict):
+    sumEntropy=0.0
+    for att in entropyDict:
+        sumEntropy+=sumEntropyInSingleDict(entropyDict[att])
+    meanEntropy=sumEntropy/len(entropyDict)
+    return (sumEntropy,meanEntropy)
+
 if __name__ == "__main__":
     file = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
     loadedData = Loader.loadExtensionSensitive(file)
     dicks=countOccurency(loadedData)
     pDics = countProbabilities(dicks)
+    eDicts = countEntropyOfDicts(pDics)
+    sumEnt, meanEnt = countEntropyInData(eDicts)
     print(dicks)
     print (pDics)
+    print (eDicts)
+    print ("Sum: "+(str)(sumEnt) +"    Mean: "+(str)(meanEnt)+"")
