@@ -65,8 +65,9 @@ def loadAndCount(pathToFile):
     pDicts = countProbabilities(dicts)
     eDicts = countEntropyOfDicts(pDicts)
     sumEnt, meanEnt = countEntropyInData(eDicts)
-    metricEnt = sumEnt/(float)(fields)
-    return (sumEnt,meanEnt,metricEnt)
+    metricEnt = sumEnt/(float)(rows)
+    bitsToSaveData = sumEnt*(float)(rows)
+    return (sumEnt,meanEnt,metricEnt,bitsToSaveData)
 
 if __name__ == "__main__":
     file = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"

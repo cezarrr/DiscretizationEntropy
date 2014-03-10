@@ -7,8 +7,6 @@ if __name__ == "__main__":
     pathsList = paths.split()
     pathsList = [x.lstrip('"').rstrip('"') for x in pathsList ]
 
-    print pathsList
-
     for tablePath in pathsList:
-        (sumE, meanE, metricE)=oc.loadAndCount(tablePath)
-        print (tablePath+" ->  Sum: "+(str)(sumE)+"[bits]")
+        (sumE, meanE, metricE,bitsToSaveData)=oc.loadAndCount(tablePath)
+        print (tablePath+" ->  Sum: "+(str)(sumE)+"[bits]  Bits to save data: "+(str)(bitsToSaveData))
