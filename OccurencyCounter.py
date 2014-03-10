@@ -56,8 +56,10 @@ def countEntropyInData(entropyDict):
     meanEntropy=sumEntropy/len(entropyDict)
     return (sumEntropy,meanEntropy)
 
-def loadAndCount(pathToFile):
+def loadAndCount(pathToFile, reduceData=False):
     loadedData = Loader.loadExtensionSensitive(pathToFile)
+    if reduce:
+        loadedData = Loader.reduceRepetitions(loadedData)
     rows = len(loadedData)
     cols = len(loadedData[0])
     fields = rows*cols

@@ -6,6 +6,7 @@ Loading module
 
 
 import csv
+import copy
 
 def loadData(fileName, csvDelimiter=','):
     dataSet = []
@@ -92,8 +93,42 @@ def loadExtensionSensitive(fileName):
         loadedData=loadData(fileName)
     return loadedData
 
+def checkIfRepetitionOccurs(instanceA, instanceB):
+    numberOfAtts = len(instanceA)
+    repetition = True
+    for col in range(numberOfAtts):
+        if(col< numberOfAtts):
+            if(instanceA[col]!=instanceB[col]):
+                repetition = False
+                break
+    return repetition
+
+def reduceRepetitions(loadedData):
+    currentData = copy.deepcopy(loadedData)
+    a=0
+    while a < len(currentData)-1:
+
+        b=min(a+1,len(currentData)-1)
+        while b < len(currentData):
+            if(checkIfRepetitionOccurs(currentData[a],currentData[b])):
+                del currentData[b]
+
+            else:
+                b+=1
+
+        a+=1
+
+    print ("Current len="+(str)(len(currentData)))
+    print ("One-over-reduction ratio="+(str)((float)(len(currentData))/(float)(len(loadedData))))
+    return currentData
+
+
+
 if __name__ == "__main__":
-    file = "C:\Users\CJank\Desktop\\tmp\\testowyRSES.tab"
-    file2 = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
-    X=loadExtensionSensitive(file2)
+    file = "C:\Users\CJank\Desktop\\tmp\ResultsOthers\irisWEKA.arff"
+
+    X=loadExtensionSensitive(file)
     print X
+    print len(X)
+    Y = reduceRepetitions(X)
+    print len(Y)
