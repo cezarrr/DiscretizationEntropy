@@ -3,6 +3,7 @@ __author__ = 'CJank'
 import OccurencyCounter as oc
 import InconsistencyCounter as ic
 import os
+import shlex
 
 def writeResultsToFile(tupleToWrite, filePath):
     with open(filePath,'w+') as file:
@@ -21,7 +22,7 @@ def writeResultsToFile(tupleToWrite, filePath):
 if __name__ == "__main__":
     paths = raw_input('Path to output file [space] paths to files with data to count entropy (space as delimiter): ').rstrip('\n')
 
-    pathsList = paths.split()
+    pathsList = shlex.split(paths)
     pathsList = [x.lstrip('"').rstrip('"') for x in pathsList ]
     resultPath = pathsList[0]
     pathsList = pathsList[1:]
