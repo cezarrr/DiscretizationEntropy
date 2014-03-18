@@ -2,6 +2,7 @@ __author__ = 'CJank'
 
 import OccurencyCounter as oc
 import InconsistencyCounter as ic
+import os
 
 def writeResultsToFile(tupleToWrite, filePath):
     with open(filePath,'w+') as file:
@@ -27,15 +28,18 @@ if __name__ == "__main__":
 
 
     results = []
-    options = [False,True]
-    results.append(("Path of file:","Reduction?","Mean number of bits to save one instance:",\
-                    "Bits to save the whole dataset:","Number of inconsistencies:"))
+    reductionOptions = [False,True]
+    results.append(("File:","Reduction?"," Entropy: [bit]",\
+                    "Number of instances:",
+                    "Minimal number of bits to save whole dataset:","Number of inconsistencies:",\
+                    "Percent of inconsistencies:"))
     for tablePath in pathsList:
-        for opt in options:
-            (sumE, meanE, metricE,bitsToSaveData)=oc.loadAndCount(tablePath,reduceData=opt)
-            inconsistencyCount = ic.countInconsistencyFromFile(tablePath,reduceData=opt)
-            print (tablePath+"(reduction="+str(opt)+")"+" ->  Mean number of bits to save one instance: "+(str)(sumE)+ \
-                   "  Bits to save whole dataset: "+(str)(bitsToSaveData)+ \
-                   "  Inconsistencies: "+(str)(inconsistencyCount))
-            results.append((tablePath,opt,sumE,bitsToSaveData,inconsistencyCount))
+        for opt in reductionOptions:
+            (sumE, meanE, metricE,bitsToSaveData,dataLen)=oc.loadAndCount(tablePath,reduceData=opt)
+            inconsistencyCount, inconsistencyRatio = ic.countInconsistencyFromFile(tablePath,reduceData=opt)
+            print (tablePath+"(reduction="+str(opt)+")"+" ->  Entropy: [bit] "+(str)(sumE)+ \
+                   "  Minimal number of bits to save whole dataset: "+(str)(bitsToSaveData)+ \
+                   "  Inconsistencies: "+(str)(inconsistencyCount)+\
+                   " ("+str(inconsistencyRatio*100)+" %)")
+            results.append((os.path.basename(tablePath),opt,sumE,dataLen,bitsToSaveData,inconsistencyCount,inconsistencyRatio*100))
             writeResultsToFile(results,resultPath)

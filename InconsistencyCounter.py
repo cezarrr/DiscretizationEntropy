@@ -3,12 +3,16 @@ __author__ = 'CJank'
 import Loader
 
 def countInconsistency(loadedData):
-    counter=0
+    knownInconsistencies = set()
     for a in range(len(loadedData)-1):
+        if(a in knownInconsistencies): #jesli juz policzylismy dla danej wartosci
+                continue
+        consistent = True
         for b in range(min(a+1,len(loadedData)-1),len(loadedData)):
             if(checkIfInconsistencyOccurs(loadedData[a],loadedData[b])):
-                counter+=1
-    return counter
+                knownInconsistencies.add(a)
+                knownInconsistencies.add(b)
+    return len(knownInconsistencies)
 
 def checkIfInconsistencyOccurs(instanceA, instanceB):
     numberOfAtts = len(instanceA)
@@ -27,7 +31,8 @@ def countInconsistencyFromFile(path, reduceData=False):
     if (reduceData):
         data = Loader.reduceRepetitions(data)
     inconsistencyCounter=countInconsistency(data)
-    return inconsistencyCounter
+    inconsistencyRatio = float(inconsistencyCounter)/len(data)
+    return inconsistencyCounter, inconsistencyRatio
 
 if __name__ == "__main__":
     data=Loader.loadExtensionSensitive("C:\Users\CJank\Desktop\Dyskretyzator\Results_\\australianDiscretizationResults_Reduced.txt")

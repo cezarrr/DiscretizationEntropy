@@ -69,7 +69,8 @@ def loadAndCount(pathToFile, reduceData=False):
     sumEnt, meanEnt = countEntropyInData(eDicts)
     metricEnt = sumEnt/(float)(rows)
     bitsToSaveData = sumEnt*(float)(rows)
-    return (sumEnt,meanEnt,metricEnt,bitsToSaveData)
+    numberOfInstances = len(loadedData)
+    return (sumEnt,meanEnt,metricEnt,bitsToSaveData,numberOfInstances)
 
 if __name__ == "__main__":
     file = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
