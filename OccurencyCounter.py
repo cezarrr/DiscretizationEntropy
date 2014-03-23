@@ -23,6 +23,17 @@ def countOccurency(dataTable):
 
     return listOfDicts
 
+def countValuesOfAttributes(listOfDicts):
+    valuesCounter=0
+    importantAttsCounter = 0
+    for d in range(len(listOfDicts)):
+        dicLen = len(listOfDicts[d])
+        valuesCounter+=dicLen
+        if (dicLen>1):
+            importantAttsCounter+=1
+
+    return (valuesCounter,importantAttsCounter)
+
 def countProbabilities(listOfDicts):
     probDicts = copy.deepcopy(listOfDicts)
 
@@ -70,7 +81,8 @@ def loadAndCount(pathToFile, reduceData=False):
     metricEnt = sumEnt/(float)(rows)
     bitsToSaveData = sumEnt*(float)(rows)
     numberOfInstances = len(loadedData)
-    return (sumEnt,meanEnt,metricEnt,bitsToSaveData,numberOfInstances)
+    valuesOfAtts,importantAtts = countValuesOfAttributes(dicts)
+    return (sumEnt,meanEnt,metricEnt,bitsToSaveData,numberOfInstances,valuesOfAtts,importantAtts)
 
 if __name__ == "__main__":
     file = "C:\Users\CJank\Desktop\\tmp\\wineDscr.arff"
